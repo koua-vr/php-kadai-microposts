@@ -90,12 +90,12 @@ class User extends Authenticatable
     
     public function favorites()
     {
-        return $this->belongsToMany(User::class, 'user_favorite', 'user_id', 'favorite_id')->withTimestamps();
+        return $this->belongsToMany(Micropost::class, 'user_favorite', 'user_id', 'favorite_id')->withTimestamps();
     }
 
     public function favorite_microposts()
     {
-        $favorite_ids = $this->favorites()-> pluck('user_favorite.favorite_id')->toArray();
+        $favorite_ids = $this->favorites()-> pluck('microposts.id')->toArray();
         return Micropost::whereIn('id', $favorite_ids);
     }
     
